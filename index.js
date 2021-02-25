@@ -39,14 +39,26 @@ function Airplane(name) {
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
   
- function Person() {
+ function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+    this.toString = function(){
+      return `${this.name}, ${this.age}`
+  }
+  
+}
+Person.prototype.eat = function(edible){
+    if(this.stomach.length < 10){
+    this.stomach.push(edible);
     
   }
- 
- 
 
-  
-  
+  }
+  Person.prototype.poop = function (){
+    this.stomach = [];
+  }  
+
   
   
   /*
@@ -63,11 +75,15 @@ function Airplane(name) {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
+ function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+ }
+  Car.prototype.fill = function (gallons){
+  this.tank = this.tank + gallons;
   }
-  
-  
   /*
     TASK 3
       - Write a Baby constructor subclassing Person.
@@ -75,16 +91,19 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+ function Baby(name, age, favoriteToy) {
+    Person.call(this,name, age) 
+    this.favoriteToy = favoriteToy;
+ }
+  Baby.prototype = Object.create(Person.prototype)
+  Baby.prototype.play = function (){
+    return `Playing with ${this.favoriteToy}`
   }
- 
-  
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
+    1. I created a baby with the ability to play with their favorite toy, passing to it the ability 
+    2. as the Person function above to be able to eat, poop and play with the toy after the baby has some food in her/his stomech. 
     3. 
     4. 
   */
